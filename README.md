@@ -234,6 +234,7 @@ Value of the __options__ attribute is a type of [IMyOptions](https://github.com/
 | __ariaLabelNextMonth__   | Next Month | string | Aria label text of next month button. |
 | __ariaLabelPrevYear__   | Previous Year | string | Aria label text of previous year button. |
 | __ariaLabelNextYear__   | Next Year | string | Aria label text of next year button. |
+| __setDateFromPrevNextMoCell__   | false | boolean | Date will be set when selecting a cell in a previous of next month |
 
 * Example of the options data (not all properties listed):
 ```ts

@@ -69,6 +69,12 @@ export class SampleDatePickerNormal implements OnInit {
         this.myDatePickerNormalOptions = copy;
     }
 
+    onSetDateFromPrevNextMoCellButton(checked: boolean) {
+        let copy = this.getCopyOfOptions();
+        copy.setDateFromPrevNextMoCell = checked;
+        this.myDatePickerNormalOptions = copy;
+    }
+
     onShowClearDateButton(checked: boolean) {
         let copy = this.getCopyOfOptions();
         copy.showClearDateBtn = checked;
@@ -121,6 +127,10 @@ export class SampleDatePickerNormal implements OnInit {
         event.stopPropagation();
         // Increase value of selector by one in order the component detect change
         this.selector++;
+    }
+
+    onFocusChanged(event: any) {
+        console.log('onFocusChanged', event);
     }
 
     ngOnInit() {

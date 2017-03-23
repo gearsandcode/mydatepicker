@@ -35,6 +35,7 @@ export class MyDatePicker implements OnChanges, ControlValueAccessor {
     @Output() inputFieldChanged: EventEmitter<IMyInputFieldChanged> = new EventEmitter<IMyInputFieldChanged>();
     @Output() calendarViewChanged: EventEmitter<IMyCalendarViewChanged> = new EventEmitter<IMyCalendarViewChanged>();
     @Output() calendarToggle: EventEmitter<number> = new EventEmitter<number>();
+    @Output() hasFocus: EventEmitter<boolean> = new EventEmitter<boolean>();
 
     onChangeCb: (_: any) => void = () => { };
     onTouchedCb: () => void = () => { };
@@ -111,7 +112,8 @@ export class MyDatePicker implements OnChanges, ControlValueAccessor {
         ariaLabelPrevMonth: <string> "Previous Month",
         ariaLabelNextMonth: <string> "Next Month",
         ariaLabelPrevYear: <string> "Previous Year",
-        ariaLabelNextYear: <string> "Next Year"
+        ariaLabelNextYear: <string> "Next Year",
+        setDateFromPrevNextMoCell: <boolean> false,
     };
 
     constructor(public elem: ElementRef, private renderer: Renderer, private localeService: LocaleService, private utilService: UtilService) {
@@ -211,7 +213,12 @@ export class MyDatePicker implements OnChanges, ControlValueAccessor {
         }
     }
 
+    hasFocusInput(event: any): void {
+        this.hasFocus.emit(true);
+    }
+
     lostFocusInput(event: any): void {
+        this.hasFocus.emit(false);
         this.selectionDayTxt = event.target.value;
         this.onTouchedCb();
     }
@@ -438,23 +445,23 @@ export class MyDatePicker implements OnChanges, ControlValueAccessor {
 
     cellClicked(cell: any): void {
         // Cell clicked on the calendar
-        if (cell.cmo === this.PREV_MONTH) {
-            // Previous month day
-            this.prevMonth();
+
+        if (
+            cell.dateObj.year === this.selectedDate.year &&
+            cell.dateObj.month === this.selectedDate.month &&
+            cell.dateObj.day === this.selectedDate.day
+        ) {
+            this.clearDate();
         }
-        else if (cell.cmo === this.CURR_MONTH) {
-            // Current month day - if date is already selected clear it
-            if (cell.dateObj.year === this.selectedDate.year && cell.dateObj.month === this.selectedDate.month && cell.dateObj.day === this.selectedDate.day) {
-                this.clearDate();
-            }
-            else {
-                this.selectDate(cell.dateObj);
-            }
+
+        if(cell.cmo === this.PREV_MONTH) {
+            !this.opts.setDateFromPrevNextMoCell ? this.prevMonth() : this.selectDate(cell.dateObj);
+        } else if (cell.cmo === this.NEXT_MONTH) {
+            !this.opts.setDateFromPrevNextMoCell ? this.nextMonth() : this.selectDate(cell.dateObj);
+        } else {
+            this.selectDate(cell.dateObj);
         }
-        else if (cell.cmo === this.NEXT_MONTH) {
-            // Next month day
-            this.nextMonth();
-        }
+
         this.resetMonthYearEdit();
     }
 

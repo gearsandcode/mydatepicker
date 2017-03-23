@@ -443,6 +443,27 @@ describe('MyDatePicker', () => {
         }
     });
 
+    it('options - set date from previous and next date cells', () => {
+
+        comp.options = {setDateFromPrevNextMoCell: true};
+
+        fixture.detectChanges();
+        let btnpicker = getElement('.btnpicker');
+        let selector = getElement('.selector');
+        expect(selector).toBe(null);
+
+        btnpicker.nativeElement.click();
+        fixture.detectChanges();
+        let otherMonthDays = getElements('.othermonth');
+        expect(otherMonthDays).not.toBe(null);
+        otherMonthDays[1].nativeElement.click();
+
+        fixture.detectChanges();
+        selector = getElement('.selector');
+        //expect(otherMonthDays.length).toBe(2);
+        expect(selector).toBe(null);
+    });
+
     it('options - date format', () => {
         comp.options = {dateFormat: 'dd.mm.yyyy', indicateInvalidDate: true};
 

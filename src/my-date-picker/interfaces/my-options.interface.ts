@@ -45,4 +45,5 @@ export interface IMyOptions {
     ariaLabelNextMonth?: string;
     ariaLabelPrevYear?: string;
     ariaLabelNextYear?: string;
+    setDateFromPrevNextMoCell?: boolean;
 }

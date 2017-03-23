@@ -67,6 +67,12 @@
             </label>
         </li>
         <li>
+            <label>
+                <span>Set date from next and previous month cells:</span>
+                <input style="cursor: pointer" type="checkbox" (change)="onSetDateFromPrevNextMoCellButton($event.currentTarget.checked)" [checked]="false">
+            </label>
+        </li>
+        <li>
             <button style="cursor: pointer" type="button" (click)="onToggleSelector($event)">Toggle selector</button>
         </li>
     </ul>
@@ -75,7 +81,7 @@
         <tr>
             <td style="vertical-align: top">
                 <my-date-picker [options]="myDatePickerNormalOptions"
-                                (dateChanged)="onDateChanged($event)" (inputFieldChanged)="onInputFieldChanged($event)" (calendarViewChanged)="onCalendarViewChanged($event)" (calendarToggle)="onCalendarToggle($event)"
+                                (dateChanged)="onDateChanged($event)" (hasFocus)="onFocusChanged($event)" (inputFieldChanged)="onInputFieldChanged($event)" (calendarViewChanged)="onCalendarViewChanged($event)" (calendarToggle)="onCalendarToggle($event)"
                                 [selDate]="selectedDateNormal" [placeholder]="placeholder" [selector]="selector"></my-date-picker>
             </td>
             <td style="vertical-align: top">
